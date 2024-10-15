@@ -8,6 +8,12 @@
 #   - You can enter hostnames or ip addresses
 #   - A hostname/ip can be a member of multiple groups
 
+[compute]
+nas.sixducks.duckdns.org
+
+[storage]
+nas.sixducks.duckdns.org
+
 # Ex 1: Ungrouped hosts, specify before any group headers:
 
 ## green.example.com
