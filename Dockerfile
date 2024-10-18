@@ -1,7 +1,8 @@
 FROM fedora:latest
 
 # Defaults
-ARG DEFAULT_USER='jonathan'
+# ARG DEFAULT_USER='jonathan'
+ARG DEFAULT_USER='root'
 ARG GITHUB_USERNAME='jonathan'
 ARG GITHUB_EMAIL='celluloid-demon@users.noreply.github.com'
 
@@ -15,9 +16,9 @@ RUN dnf groupinstall -y "Development Libraries"
 RUN dnf install -y ansible
 
 # Add user
-RUN useradd --create-home ${DEFAULT_USER}
+# RUN useradd --create-home ${DEFAULT_USER} # (NOTE: Deprecated in favor of root, the default user on your docker swarm nodes.)
 RUN echo "${DEFAULT_USER}:password" | chpasswd
-RUN usermod -a -G wheel ${DEFAULT_USER}
+# RUN usermod -a -G wheel ${DEFAULT_USER}
 
 USER ${DEFAULT_USER}
 
@@ -27,8 +28,6 @@ RUN mkdir -p ${HOME}/applications
 # Merge user files and set permissions
 # COPY --chown=${DEFAULT_USER}:${DEFAULT_USER} docker/home/${DEFAULT_USER} /home/${DEFAULT_USER}
 # RUN chmod 755 ${XFCE_WRAPPER_DIR}/bin/*
-
-USER ${DEFAULT_USER}
 
 # Configure git
 RUN git config --global user.name  "${GITHUB_USERNAME}"
@@ -41,4 +40,7 @@ RUN ln -s ${HOME}/applications/shared-config-nix/home/bin ${HOME}/bin
 RUN ln -s ${HOME}/applications/shared-config-nix/home/usr ${HOME}/usr
 RUN ln -s ${HOME}/applications/shared-config-nix/dot-files/bash_aliases ${HOME}/.bashrc.d/bash_aliases
 
-WORKDIR /home/${DEFAULT_USER}
+# Configure ssh config (install symlink to persistent storage location within vscode project)
+RUN ln -s /workspaces/ansible/.ssh ${HOME}/.ssh
+
+# WORKDIR /home/${DEFAULT_USER}
