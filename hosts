@@ -12,6 +12,10 @@
 docker00
 docker01
 
+[proxmox]
+node-antec
+node-pi4
+
 # Ex 1: Ungrouped hosts, specify before any group headers:
 
 ## green.example.com
