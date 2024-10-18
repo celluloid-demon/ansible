@@ -41,6 +41,7 @@ RUN ln -s ${HOME}/applications/shared-config-nix/home/usr ${HOME}/usr
 RUN ln -s ${HOME}/applications/shared-config-nix/dot-files/bash_aliases ${HOME}/.bashrc.d/bash_aliases
 
 # Configure ssh config (install symlink to persistent storage location within vscode project)
+RUN rm -rf ${HOME}/.ssh
 RUN ln -s /workspaces/ansible/.ssh ${HOME}/.ssh
 
 # WORKDIR /home/${DEFAULT_USER}
